@@ -5,18 +5,19 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'test/helpers/**/*.js',
-      'test/spec/components/**/*.js'
+      'test/spec/**/*.js',
     ],
     preprocessors: {
-      'test/spec/components/**/*.js': ['webpack']
+      'test/spec/**/*.js': [ 'webpack', 'sourcemap' ]
     },
     webpack: {
+      devtool: 'inline-source-map',
       cache: true,
       module: {
         loaders: [{
           test: /\.js$/,
-          loader: 'jsx-loader?harmony'
+          exclude: /node_modules/,
+          loader: 'jsx-loader!babel?optional[]=runtime',
         }, {
           test: /\.sass/,
           loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
@@ -24,7 +25,11 @@ module.exports = function (config) {
           test: /\.css$/,
           loader: 'style-loader!css-loader'
         }]
-      }
+      },
+      resolve: {
+        extensions: ['', '.js'],
+        modulesDirectories: [ 'node_modules', 'src/scripts' ]
+      },
     },
     webpackServer: {
       stats: {

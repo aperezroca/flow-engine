@@ -1,6 +1,7 @@
 let FlowConstants = { ActionTypes: {}, Events: {} };
 
 // Events
+FlowConstants.Events.FLOW_CREATE = Symbol();
 FlowConstants.Events.FLOW_CHANGE = Symbol();
 FlowConstants.Events.FLOW_EXECUTED = Symbol();
 

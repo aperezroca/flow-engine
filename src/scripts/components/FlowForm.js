@@ -1,7 +1,7 @@
 import React from 'react';
 import FlowActions from 'actions/FlowActions';
 
-export default class Flow extends React.Component {
+export default class extends React.Component {
 
   constructor() {
     super();

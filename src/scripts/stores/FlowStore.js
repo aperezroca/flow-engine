@@ -29,13 +29,29 @@ class FlowStore extends EventEmitter {
     return _lastResult;
   }
 
+  getRules() {
+    return _flow.getRules();
+  }
+
   // Event handling
+  emitFlowCreate() {
+    this.emit(FlowConstants.Events.FLOW_CREATE);
+  }
+
   emitFlowChange() {
     this.emit(FlowConstants.Events.FLOW_CHANGE);
   }
 
   emitFlowExecuted() {
     this.emit(FlowConstants.Events.FLOW_EXECUTED);
+  }
+
+  addFlowCreateListener(callback) {
+    this.on(FlowConstants.Events.FLOW_CREATE, callback);
+  }
+
+  removeFlowCreateListener(callback) {
+    this.removeListener(FlowConstants.Events.FLOW_CREATE, callback);
   }
 
   addFlowChangeListener(callback) {
@@ -61,7 +77,7 @@ AppDispatcher.register((action) => {
   switch (action.actionType) {
     case FlowConstants.ActionTypes.CREATE_FLOW:
       _createFlow(action.name);
-      flowStore.emitFlowChange();
+      flowStore.emitFlowCreate();
       break;
 
     case FlowConstants.ActionTypes.ADD_RULE:

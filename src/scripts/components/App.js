@@ -40,10 +40,6 @@ export default class App extends React.Component {
     console.log(FlowStore.getLastResult());
   }
 
-  _createFlow() {
-    FlowActions.createFlow('Flow name');
-  }
-
   _addRule() {
     FlowActions.addRule({ id: 1 });
   }

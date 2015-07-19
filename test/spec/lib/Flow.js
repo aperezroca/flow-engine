@@ -53,4 +53,75 @@ describe('Flow', () => {
     expect(() => { flow.addRule(invalidRuleA) }).toThrow();
     expect(() => { flow.addRule(invalidRuleB) }).toThrow();
   });
+
+  it('should execute an empty flow', () => {
+    const flow = new Flow();
+
+    expect(flow.execute({})).toEqual([]);
+  });
+
+  describe('Flow execution:', () => {
+    let flow;
+    const rules = [
+      { id: 1, body: (obj => obj[1]), trueId: 2, falseId: 5 },
+      { id: 2, body: (obj => obj[2]), trueId: 3, falseId: null },
+      { id: 3, body: (obj => obj[3]), trueId: 4, falseId: null },
+      { id: 4, body: (obj => obj[4]), trueId: 6, falseId: null },
+      { id: 5, body: (obj => obj[5]), trueId: null, falseId: 10 },
+      { id: 6, body: (obj => obj[6]), trueId: null, falseId: null }
+    ];
+
+    beforeEach(() => {
+      flow = new Flow();
+
+      for (let rule of rules) {
+        flow.addRule(new Rule(rule));
+      }
+    });
+
+    it('should execute', () => {
+      const result = flow.execute({
+        1: false, 2: true, 3: true,
+        4: true, 5: true, 6: true
+      });
+
+      expect(result).toEqual([[1, false], [5, true]]);
+    });
+
+    it('should execute', () => {
+      const result = flow.execute({
+        1: true, 2: false, 3: true,
+        4: true, 5: true, 6: true
+      });
+
+      expect(result).toEqual([[1, true], [2, false]]);
+    });
+
+    it('should execute', () => {
+      const result = flow.execute({
+        1: true, 2: true, 3: false,
+        4: true, 5: true, 6: true
+      });
+
+      expect(result).toEqual([[1, true], [2, true], [3, false]]);
+    });
+
+    it('should execute', () => {
+      const result = flow.execute({
+        1: true, 2: true, 3: true,
+        4: false, 5: true, 6: true
+      });
+
+      expect(result).toEqual([[1, true], [2, true], [3, true], [4, false]]);
+    });
+
+    it('should execute with rule referencing non-existing rule', () => {
+      const result = flow.execute({
+        1: false, 2: true, 3: true,
+        4: true, 5: false, 6: true
+      });
+
+      expect(result).toEqual([[1, false], [5, false]])
+    });
+  });
 });

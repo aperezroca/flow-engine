@@ -1,3 +1,29 @@
+export class Rule {
+
+  constructor(properties) {
+    if (!properties.id) {
+      throw new Error(Rule.MISSING_ID_ERROR_MESSAGE);
+    }
+
+    this.id = properties.id;
+    this.title = properties.title || `Rule ${this.id}`;
+    this.body = properties.body || () => true;
+    this.trueId = properties.trueId || null;
+    this.falseId = properties.falseId || null;
+  }
+
+  references(ruleId) {
+    return (this.trueId === ruleId) || (this.falseId === ruleId);
+  }
+
+  static referenceSameRule(ruleA, ruleB) {
+    return ((ruleB.trueId !== null) && ruleA.references(ruleB.trueId))
+        || ((ruleB.falseId !== null) && ruleA.references(ruleB.falseId));
+  }
+}
+
+Rule.MISSING_ID_ERROR_MESSAGE = 'A rule must have an id';
+
 export class Flow {
 
   constructor(name = 'Flow') {
@@ -17,13 +43,37 @@ export class Flow {
 
     this._rules.set(rule.id, rule);
 
-    if (this.size() === 1) {
+    if (this._rules.size === 1) {
       this._firstRule = rule;
     }
   }
 
   size() {
     return this._rules.size;
+  }
+
+  execute(obj) {
+    const firstRuleId = this._firstRule
+      ? this._firstRule.id
+      : null;
+
+    return this._executeRule(firstRuleId, obj);
+  }
+
+  _executeRule(ruleId, obj) {
+    let rule = this.getRule(ruleId);
+    let result;
+    let nextRuleId;
+
+    if ((ruleId === null) || (rule === undefined)) {
+      return [];
+    }
+
+    rule = this.getRule(ruleId);
+    result = rule.body(obj);
+    nextRuleId = result ? rule.trueId : rule.falseId;
+
+    return [ [ rule.id, result ] ].concat(this._executeRule(nextRuleId, obj));
   }
 
   _ruleIsValid(rule) {
@@ -39,8 +89,7 @@ export class Flow {
     //   ...
     // });
     for (let [, rule] of this._rules) {
-      if (((inputRule.trueId !== null) && inputRule.references(rule.trueId))
-        || (inputRule.falseId !== null) && inputRule.references(rule.falseId)) {
+      if (Rule.referenceSameRule(inputRule, rule)) {
         return true;
       }
     }
@@ -50,29 +99,3 @@ export class Flow {
 }
 
 Flow.INVALID_RULE_ERROR_MESSAGE = 'The rule you\'re trying to add is not valid';
-
-export class Rule {
-
-  constructor(properties) {
-    if (!properties.id) {
-      throw new Error(Flow.MISSING_ID_ERROR_MESSAGE);
-    }
-
-    this.id = properties.id;
-    this.title = properties.title || `Rule ${this.id}`;
-    this.body = properties.body || () => true;
-    this.trueId = properties.trueId || null;
-    this.falseId = properties.falseId || null;
-  }
-
-  references(ruleId) {
-    return (this.trueId === ruleId) || (this.falseId === ruleId);
-  }
-
-  static referenceSameRule(ruleA, ruleB) {
-    return ((ruleB.trueId !== null) && ruleA.references(ruleB.trueId))
-        || ((ruleB.falseId !== null) && ruleA.references(ruleB.falseId));
-  }
-}
-
-Rule.MISSING_ID_ERROR_MESSAGE = 'A rule must have an id';

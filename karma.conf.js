@@ -40,7 +40,7 @@ module.exports = function (config) {
     port: 8080,
     logLevel: config.LOG_INFO,
     colors: true,
-    autoWatch: false,
+    autoWatch: true,
     // Start these browsers, currently available:
     // - Chrome
     // - ChromeCanary
@@ -50,8 +50,8 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: ['PhantomJS'],
-    reporters: ['progress'],
+    reporters: ['dots'],
     captureTimeout: 60000,
-    singleRun: true
+    singleRun: false
   });
 };

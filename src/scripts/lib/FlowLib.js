@@ -36,6 +36,10 @@ export class Flow {
     return this._rules.get(ruleId);
   }
 
+  getRules() {
+    return [...this._rules.values()];
+  }
+
   addRule(rule) {
     if (!this._ruleIsValid(rule)) {
       throw new Error(Flow.INVALID_RULE_ERROR_MESSAGE);
@@ -73,7 +77,7 @@ export class Flow {
     result = rule.body(obj);
     nextRuleId = result ? rule.trueId : rule.falseId;
 
-    return [ [ rule.id, result ] ].concat(this._executeRule(nextRuleId, obj));
+    return [ { rule, result } ].concat(this._executeRule(nextRuleId, obj));
   }
 
   _ruleIsValid(rule) {
@@ -83,9 +87,8 @@ export class Flow {
   }
 
   _referencesPreviouslyReferenced(inputRule) {
-    // For some reason Babel doesn't allow me to use Array.from
-    // or the spread operator :(
-    // return (...this._rules.values()).find(rule => {
+    // For some reason Babel doesn't allow me to use Array.find
+    // return [...this._rules.values()].find(rule => {
     //   ...
     // });
     for (let [, rule] of this._rules) {

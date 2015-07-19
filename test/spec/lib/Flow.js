@@ -85,7 +85,11 @@ describe('Flow', () => {
         4: true, 5: true, 6: true
       });
 
-      expect(result).toEqual([[1, false], [5, true]]);
+      expect(result.length).toBe(2);
+      expect(result[0].rule.id).toBe(1);
+      expect(result[0].result).toBeFalsy();
+      expect(result[1].rule.id).toBe(5);
+      expect(result[1].result).toBeTruthy();
     });
 
     it('should execute', () => {
@@ -94,7 +98,11 @@ describe('Flow', () => {
         4: true, 5: true, 6: true
       });
 
-      expect(result).toEqual([[1, true], [2, false]]);
+      expect(result.length).toBe(2);
+      expect(result[0].rule.id).toBe(1);
+      expect(result[0].result).toBeTruthy();
+      expect(result[1].rule.id).toBe(2);
+      expect(result[1].result).toBeFalsy();
     });
 
     it('should execute', () => {
@@ -103,7 +111,13 @@ describe('Flow', () => {
         4: true, 5: true, 6: true
       });
 
-      expect(result).toEqual([[1, true], [2, true], [3, false]]);
+      expect(result.length).toBe(3);
+      expect(result[0].rule.id).toBe(1);
+      expect(result[0].result).toBeTruthy();
+      expect(result[1].rule.id).toBe(2);
+      expect(result[1].result).toBeTruthy();
+      expect(result[2].rule.id).toBe(3);
+      expect(result[2].result).toBeFalsy();
     });
 
     it('should execute', () => {
@@ -112,7 +126,15 @@ describe('Flow', () => {
         4: false, 5: true, 6: true
       });
 
-      expect(result).toEqual([[1, true], [2, true], [3, true], [4, false]]);
+      expect(result.length).toBe(4);
+      expect(result[0].rule.id).toBe(1);
+      expect(result[0].result).toBeTruthy();
+      expect(result[1].rule.id).toBe(2);
+      expect(result[1].result).toBeTruthy();
+      expect(result[2].rule.id).toBe(3);
+      expect(result[2].result).toBeTruthy();
+      expect(result[3].rule.id).toBe(4);
+      expect(result[3].result).toBeFalsy();
     });
 
     it('should execute with rule referencing non-existing rule', () => {
@@ -121,7 +143,11 @@ describe('Flow', () => {
         4: true, 5: false, 6: true
       });
 
-      expect(result).toEqual([[1, false], [5, false]])
+      expect(result.length).toBe(2);
+      expect(result[0].rule.id).toBe(1);
+      expect(result[0].result).toBeFalsy();
+      expect(result[1].rule.id).toBe(5);
+      expect(result[1].result).toBeFalsy();
     });
   });
 });

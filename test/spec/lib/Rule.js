@@ -54,4 +54,25 @@ describe('Rule', () => {
     expect(ruleD.references(4)).toBeTruthy();
     expect(ruleD.references(null)).toBeFalsy();
   });
+
+  it('should tell when two rules reference the same rule', () => {
+    const ruleA = new Rule({ id: 1 });
+    const ruleB = new Rule({ id: 1, trueId: 2 });
+    const ruleC = new Rule({ id: 1, falseId: 3 });
+    const ruleD = new Rule({ id: 1, trueId: 2, falseId: 4 });
+
+    expect(Rule.referenceSameRule(ruleA, ruleA)).toBeFalsy();
+    expect(Rule.referenceSameRule(ruleA, ruleB)).toBeFalsy();
+    expect(Rule.referenceSameRule(ruleA, ruleC)).toBeFalsy();
+    expect(Rule.referenceSameRule(ruleA, ruleD)).toBeFalsy();
+
+    expect(Rule.referenceSameRule(ruleB, ruleB)).toBeTruthy();
+    expect(Rule.referenceSameRule(ruleB, ruleC)).toBeFalsy();
+    expect(Rule.referenceSameRule(ruleB, ruleD)).toBeTruthy();
+
+    expect(Rule.referenceSameRule(ruleC, ruleC)).toBeTruthy();
+    expect(Rule.referenceSameRule(ruleC, ruleD)).toBeFalsy();
+
+    expect(Rule.referenceSameRule(ruleD, ruleD)).toBeTruthy();
+  });
 });

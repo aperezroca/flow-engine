@@ -68,6 +68,11 @@ export class Rule {
   references(ruleId) {
     return (this.trueId === ruleId) || (this.falseId === ruleId);
   }
+
+  static referenceSameRule(ruleA, ruleB) {
+    return ((ruleB.trueId !== null) && ruleA.references(ruleB.trueId))
+        || ((ruleB.falseId !== null) && ruleA.references(ruleB.falseId));
+  }
 }
 
 Rule.MISSING_ID_ERROR_MESSAGE = 'A rule must have an id';

@@ -26,8 +26,8 @@ Rule.MISSING_ID_ERROR_MESSAGE = 'A rule must have an id';
 
 export class Flow {
 
-  constructor(name = 'Flow') {
-    this.name = name;
+  constructor(name) {
+    this.name = name || 'Flow';
     this._rules = new Map();
     this._firstRule = null;
   }

@@ -1,16 +1,18 @@
 import React from 'react';
 import FlowStore from 'stores/FlowStore';
 import FlowActions from 'actions/FlowActions';
-import Rule from 'Rule';
-import EvaluatedRule from 'EvaluatedRule';
+import RuleList from 'RuleList';
+import Result from 'Result';
 import RuleForm from 'RuleForm';
 import ExecutionForm from 'ExecutionForm';
+
+require('dashboard.scss');
 
 export default class FlowDashboard extends React.Component {
 
   constructor() {
     super();
-    this.state = { rules: [], result: [] };
+    this.state = { rules: [], result: [], flowName: '' };
     this._boundHandleFlowChange = this._handleFlowChange.bind(this);
     this._boundHandleFlowExecuted = this._handleFlowExecuted.bind(this);
   }
@@ -21,6 +23,8 @@ export default class FlowDashboard extends React.Component {
 
     if (FlowStore.getFlow() === undefined) {
       this.context.router.transitionTo('home');
+    } else {
+      this.setState({ flowName: FlowStore.getFlow().name });
     }
   }
 
@@ -30,32 +34,19 @@ export default class FlowDashboard extends React.Component {
   }
 
   render() {
-    const rules = this.state.rules.map(rule => {
-      return (
-        <li key={rule.id}>
-          <Rule rule={rule}/>
-        </li>
-      );
-    });
-
-    const result = this.state.result.map(rule => {
-      return (
-        <li key={rule.rule.id}>
-          <EvaluatedRule rule={rule.rule} result={rule.result}/>
-        </li>
-      );
-    });
-
     return (
-      <div>
-        <RuleForm />
-        <ExecutionForm />
-        <ul>
-          {rules}
-        </ul>
-        <ul>
-          {result}
-        </ul>
+      <div className="dashboard">
+        <h1>{this.state.flowName}</h1>
+        <div className="dashboard__main-container">
+          <div>
+            <RuleForm />
+            <RuleList rules={this.state.rules}/>
+          </div>
+          <div>
+            <ExecutionForm />
+            <Result result={this.state.result}/>
+          </div>
+        </div>
       </div>
     );
   }

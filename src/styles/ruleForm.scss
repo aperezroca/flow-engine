@@ -1,0 +1,23 @@
+.rule-form {
+  text-align: center;
+  width: 300px;
+}
+
+.rule-form__input {
+  width: 100%;
+  border: 1px solid black;
+  vertical-align: bottom;
+  margin-bottom: 6px;
+}
+
+.rule-form__input--half {
+  width: calc(50% - 3px);
+
+  & + & {
+    margin-left: 6px;
+  }
+}
+
+.rule-form__input--textarea {
+  height: 100px;
+}

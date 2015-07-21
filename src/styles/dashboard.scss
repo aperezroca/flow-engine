@@ -1,0 +1,12 @@
+.dashboard {
+  text-align: center;
+}
+
+.dashboard__main-container {
+  & > * {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    margin-bottom: 40px;
+  }
+}

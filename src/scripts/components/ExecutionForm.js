@@ -1,6 +1,8 @@
 import React from 'react';
 import FlowActions from 'actions/FlowActions';
 
+require('executionForm.scss');
+
 export default class ExecutionForm extends React.Component {
 
   constructor() {
@@ -10,8 +12,8 @@ export default class ExecutionForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this._handleSubmit.bind(this)}>
-        <textarea value={this.state.inputObject} onChange={this._handleChange.bind(this)}/>
+      <form className="execution-form" onSubmit={this._handleSubmit.bind(this)}>
+        <textarea className="execution-form__input" value={this.state.inputObject} onChange={this._handleChange.bind(this)}/>
         <input type="submit" value="Execute"/>
       </form>
     );

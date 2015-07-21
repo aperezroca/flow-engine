@@ -1,0 +1,37 @@
+@import "config";
+
+.rule {
+  border: 3px solid lightgray;
+  overflow: hidden;
+}
+
+.rule__id {
+  float: left;
+  background-color: lightgray;
+  padding: 10px;
+  min-width: 40px;
+}
+
+.rule__title {
+  line-height: 38px;
+}
+
+.rule__true-id,
+.rule__false-id {
+  float: right;
+  padding: 10px;
+  min-width: 40px;
+  min-height: 38px;
+}
+
+.rule__true-id {
+  background-color: $color--brand;
+
+  .rule--false & { opacity: 0.2; }
+}
+
+.rule__false-id {
+  background-color: $color--red;
+
+  .rule--true & { opacity: 0.2; }
+}

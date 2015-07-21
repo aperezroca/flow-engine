@@ -1,10 +1,12 @@
 import React from 'react';
-import Router from 'react-router';
+import { default as Router, Route,
+         DefaultRoute, HistoryLocation } from 'react-router';
 import App from 'App';
 import FlowForm from 'FlowForm';
 import FlowDashboard from 'FlowDashboard';
 
-const { Route, DefaultRoute, HistoryLocation } = Router;
+require('vendor/normalize.css');
+require('defaults.scss');
 
 const content = document.getElementById('content');
 

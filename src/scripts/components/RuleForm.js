@@ -1,6 +1,8 @@
 import React from 'react';
 import FlowActions from 'actions/FlowActions';
 
+require('ruleForm.scss');
+
 export default class extends React.Component {
 
   constructor() {
@@ -10,13 +12,13 @@ export default class extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this._handleSubmit.bind(this)}>
-        <input type="text" name="id" placeholder="Id" value={this.state.id} onChange={this._handlePropChange.bind(this)}/>
-        <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this._handlePropChange.bind(this)}/>
-        <textarea name="body" placeholder="Body" onChange={this._handlePropChange.bind(this)} value={this.state.body}/>
-        <input type="text" name="trueId" placeholder="Rule Id if body returns True" value={this.state.trueId} onChange={this._handlePropChange.bind(this)}/>
-        <input type="text" name="falseId" placeholder="Rule Id if body returns False" value={this.state.falseId} onChange={this._handlePropChange.bind(this)}/>
-        <input type="submit" value="Create"/>
+      <form className="rule-form" onSubmit={this._handleSubmit.bind(this)}>
+        <input className="rule-form__input rule-form__input--half" type="text" name="id" placeholder="Id" value={this.state.id} onChange={this._handlePropChange.bind(this)}/>
+        <input className="rule-form__input rule-form__input--half" type="text" name="title" placeholder="Title" value={this.state.title} onChange={this._handlePropChange.bind(this)}/>
+        <textarea className="rule-form__input rule-form__input--textarea" name="body" placeholder="Body" onChange={this._handlePropChange.bind(this)} value={this.state.body}/>
+        <input className="rule-form__input rule-form__input--half" type="text" name="trueId" placeholder="Rule if true" value={this.state.trueId} onChange={this._handlePropChange.bind(this)}/>
+        <input className="rule-form__input rule-form__input--half" type="text" name="falseId" placeholder="Rule if false" value={this.state.falseId} onChange={this._handlePropChange.bind(this)}/>
+        <input type="submit" value="Add rule"/>
       </form>
     );
   }

@@ -2,11 +2,12 @@ import React from 'react';
 import { RouteHandler } from 'react-router';
 import FlowStore from 'stores/FlowStore';
 
+require('app.scss');
+
 export default class App extends React.Component {
 
   constructor() {
     super();
-    this.state = { flowName: '' };
     this._boundHandleFlowCreate = this._handleFlowCreate.bind(this);
   }
 
@@ -20,15 +21,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.state.flowName}</h1>
+      <div className="app">
         <RouteHandler/>
       </div>
     );
   }
 
   _handleFlowCreate() {
-    this.setState({ flowName: FlowStore.getFlow().name });
     this.context.router.transitionTo('dashboard');
   }
 }

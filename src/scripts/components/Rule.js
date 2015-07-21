@@ -1,20 +1,29 @@
-// React
 import React from 'react';
+import classnames from 'classnames';
+
+require('rule.scss');
 
 export default class Rule extends React.Component {
 
   render() {
+    const ruleClassnames = classnames({
+      'rule': true,
+      'rule--true': this.props.result === true,
+      'rule--false': this.props.result === false
+    });
+
     return (
-      <div style={{ border: '1px solid black', padding: 5 }}>
-        <span>Id: {this.props.rule.id}</span>
-        <span>Title: {this.props.rule.title}</span>
-        <span>True: {this.props.rule.trueId}</span>
-        <span>False: {this.props.rule.falseId}</span>
+      <div className={ruleClassnames}>
+        <span className="rule__id">{this.props.rule.id}</span>
+        <span className="rule__title">{this.props.rule.title}</span>
+        <span className="rule__false-id">{this.props.rule.falseId}</span>
+        <span className="rule__true-id">{this.props.rule.trueId}</span>
       </div>
     );
   }
 }
 
 Rule.propTypes = {
-  rule: React.PropTypes.object.isRequired
+  rule: React.PropTypes.object.isRequired,
+  result: React.PropTypes.bool
 };

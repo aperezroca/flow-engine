@@ -74,7 +74,7 @@ export class Flow {
     }
 
     rule = this.getRule(ruleId);
-    result = rule.body(obj);
+    result = !!rule.body(obj);
     nextRuleId = result ? rule.trueId : rule.falseId;
 
     return [ { rule, result } ].concat(this._executeRule(nextRuleId, obj));

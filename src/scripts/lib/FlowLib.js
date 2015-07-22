@@ -87,15 +87,16 @@ export class Flow {
   }
 
   _referencesPreviouslyReferenced(inputRule) {
-    // For some reason Babel doesn't allow me to use Array.find
-    // return [...this._rules.values()].find(rule => {
-    //   ...
-    // });
     for (let [, rule] of this._rules) {
       if (Rule.referenceSameRule(inputRule, rule)) {
         return true;
       }
     }
+
+    // For some reason Babel doesn't allow me to use Array.find
+    // return [...this._rules.values()].find(rule => {
+    //   ...
+    // });
 
     return false;
   }

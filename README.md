@@ -1,12 +1,18 @@
 # Flow engine
-## Development
+## Install dependencies
 
     $ npm install
+
+## Run tests
+
+    $ grunt test
+    
+## Develop
+
     $ grunt serve
 
-## Building
-
-    $ npm install
+## Build
+    
     $ grunt build
 
-These commands build the application locally to the `/dist` folder.
+These command builds the application locally to the `/dist` folder.

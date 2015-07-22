@@ -10,7 +10,7 @@ export default class RuleList extends React.Component {
   render() {
     const result = this.props.result.map(rule => {
       return (
-        <li><Rule rule={rule.rule} result={rule.result}/></li>
+        <li key={rule.rule.id}><Rule rule={rule.rule} result={rule.result}/></li>
       );
     });
 

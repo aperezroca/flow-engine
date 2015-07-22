@@ -40,6 +40,11 @@ export default class extends React.Component {
       return;
     }
 
+    if (typeof body !== 'function') {
+      ErrorActions.setError('Rule\'s body must be a function');
+      return;
+    }
+
     try {
       FlowActions.addRule({
         id: this.state.id,

@@ -1,5 +1,6 @@
 import React from 'react';
 import FlowActions from 'actions/FlowActions';
+import ErrorActions from 'actions/ErrorActions';
 
 require('ruleForm.scss');
 
@@ -28,16 +29,31 @@ export default class extends React.Component {
   }
 
   _handleSubmit(event) {
+    let body;
+
     event.preventDefault();
 
-    FlowActions.addRule({
-      id: this.state.id,
-      title: this.state.title,
-      body: this._evalBody(),
-      trueId: this.state.trueId,
-      falseId: this.state.falseId
-    });
+    try {
+      body = this._evalBody();
+    } catch(e) {
+      ErrorActions.setError('Rule\'s body is not valid');
+      return;
+    }
 
+    try {
+      FlowActions.addRule({
+        id: this.state.id,
+        title: this.state.title,
+        body: body,
+        trueId: this.state.trueId,
+        falseId: this.state.falseId
+      });
+    } catch(e) {
+      ErrorActions.setError('The rule is not valid');
+      return;
+    }
+
+    ErrorActions.discard();
     this._clearForm();
   }
 

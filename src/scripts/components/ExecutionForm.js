@@ -1,5 +1,6 @@
 import React from 'react';
 import FlowActions from 'actions/FlowActions';
+import ErrorActions from 'actions/ErrorActions';
 
 require('executionForm.scss');
 
@@ -24,7 +25,16 @@ export default class ExecutionForm extends React.Component {
   }
 
   _handleSubmit(event) {
+    let input;
+
     event.preventDefault();
-    FlowActions.executeFlow(eval('(' + this.state.inputObject + ')')); // eslint-disable-line no-eval
+
+    try {
+      input = eval('(' + this.state.inputObject + ')'); // eslint-disable-line no-eval
+    } catch(e) {
+      ErrorActions.setError('The input object is not valid');
+    }
+
+    FlowActions.executeFlow(input);
   }
 }

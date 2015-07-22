@@ -40,9 +40,11 @@ export default class extends React.Component {
       return;
     }
 
-    if (typeof body !== 'function') {
+    if ((typeof body !== 'function') && (this.state.body !== '')) {
       ErrorActions.setError('Rule\'s body must be a function');
       return;
+    } else if (this.state.body === '') {
+      body = undefined;
     }
 
     try {

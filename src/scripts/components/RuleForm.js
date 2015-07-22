@@ -16,7 +16,7 @@ export default class extends React.Component {
       <form className="rule-form" onSubmit={this._handleSubmit.bind(this)}>
         <input className="rule-form__input rule-form__input--half" type="text" name="id" placeholder="Id" value={this.state.id} onChange={this._handlePropChange.bind(this)}/>
         <input className="rule-form__input rule-form__input--half" type="text" name="title" placeholder="Title" value={this.state.title} onChange={this._handlePropChange.bind(this)}/>
-        <textarea className="rule-form__input rule-form__input--textarea" name="body" placeholder="Body" onChange={this._handlePropChange.bind(this)} value={this.state.body}/>
+        <textarea className="rule-form__input rule-form__input--textarea" name="body" placeholder="function() { return true; }" onChange={this._handlePropChange.bind(this)} value={this.state.body}/>
         <input className="rule-form__input rule-form__input--half" type="text" name="trueId" placeholder="Rule if true" value={this.state.trueId} onChange={this._handlePropChange.bind(this)}/>
         <input className="rule-form__input rule-form__input--half" type="text" name="falseId" placeholder="Rule if false" value={this.state.falseId} onChange={this._handlePropChange.bind(this)}/>
         <input type="submit" value="Add rule"/>
